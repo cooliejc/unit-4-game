@@ -1,0 +1,47 @@
+/* .bg {
+    background-image: url("../images/background2.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto, 0;
+    } */
+
+img {
+    width: 250px;
+    height: 250px;
+    margin: 12px;
+    padding: 8px;
+}
+
+body {
+    background-image: url(../images/background2.jpg);
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.container {
+    max-width: 960px;
+    position: relative;
+    margin: auto;
+    margin-top: 24px;
+    background-color: rgba(255,255,255,.5);}
+
+.row {
+    padding: 24px;
+    padding-top: 12px;
+    padding-bottom: 8px;
+}
+
+.info, .action {
+    background-color: white;
+}
+
+.btn {
+    margin-right: 4px;
+}
+
+.opponentPokemon {
+    position: absolute;
+    right: 24px;
+}
+
