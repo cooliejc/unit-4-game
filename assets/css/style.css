@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-    max-width: 960px;
+    max-width: 820px;
     position: relative;
     margin: auto;
     margin-top: 24px;
@@ -40,8 +40,14 @@ body {
     margin-right: 4px;
 }
 
-.opponentPokemon {
+.garyPokemon {
     position: absolute;
     right: 24px;
+}
+
+.progress {
+    margin: auto;
+    margin-bottom: 12px;
+    width: 230px;
 }
 

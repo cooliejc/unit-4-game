@@ -6,11 +6,14 @@ var pokemon = [bulbasaur, charmander, pikachu, squirtle];
 
 var pokemonCard
 var playerPokemon
-var computerPokemon
-var pokemonPicturePlayer
-var pokemonPictureComputer
+var garyPokemon
+var playerCard
+var garyCard
 
-
+//Battle timeline stats
+var timeline = 0;
+var playerQueue
+var garyQueue
 
 // select pokemon
 
@@ -28,11 +31,18 @@ for (i = 0; i < pokemon.length; i++) {
     $(".buttons").append(pokemonCard);
 }
 
+
+// Create player's pokemon on the screen
 $(".pokemonSelect").on("click", function(){
-    pokemonPicturePlayer = $("<img>");
-    pokemonPicturePlayer.attr("src", pokemon[this.id].pic);
-    pokemonPicturePlayer.addClass("card");
-    $(".stage").html(pokemonPicturePlayer);
+
+    playerCard = $("<div>");
+    playerCard.addClass("card playerCard");
+
+    var image = $("<img>");
+    image.attr("src", pokemon[this.id].pic);
+
+    $(".stage").html(playerCard);
+    $(".playerCard").html(image);
 
     $(".action").html('<button id="select" class="btn btn-danger" value=' + this.id + '>Select</button>');
 
@@ -40,45 +50,89 @@ $(".pokemonSelect").on("click", function(){
 
     $("#select").on("click", function(){
         playerPokemon = pokemon[this.value];
-        computerSelect();
+        garySelect();
     });
 });
 
-var computerSelect = function() {
+var garySelect = function() {
     console.log(playerPokemon);
 
     $(".info").empty();
 
     $(".buttons").empty();
 
-    $(".info").html("<h4>You picked " + playerPokemon.name + ". Awesome choice!</h4>");
+    $(".info").html("<h4>You picked " + playerPokemon.name + ". Fucking great choice!</h4>");
 
     $(".action").empty()
 
-    $(".action").html('<button id="select" class="btn btn-danger">Opponent Selection</button>');
+    $(".action").html('<button id="select" class="btn btn-danger">Gary\'s Turn</button>');
 
     $("#select").on("click", function(){
-        computerPokemon = pokemon[Math.floor(Math.random() * 4)];
-        console.log(computerPokemon);
+        garyPokemon = pokemon[Math.floor(Math.random() * 4)];
+        console.log(garyPokemon);
 
-        pokemonPictureComputer = $("<img>");
-        pokemonPictureComputer.attr("src", computerPokemon.pic);
-        pokemonPictureComputer.addClass("opponentPokemon card");
+        garyCard = $("<img>");
+        garyCard.attr("src", garyPokemon.pic);
+        garyCard.addClass("garyPokemon card");
 
         $(".info").empty();
-        $(".info").html("<h4>Your Opponent picked " + computerPokemon.name + ". Watch out!</h4>")
-        $(".stage").append(pokemonPictureComputer);
+        $(".info").html("<h4>Oh shit! Gary picked " + garyPokemon.name + ". Watch out!</h4>")
+        $(".stage").append(garyCard);
         $("#select").hide();
         setupGame();
     });
 }
 
 var setupGame = function() {
-    $(".action").html('<button id="play" class="btn btn-danger">Battle!</button>');
-    $("#play").on("click", function(){
-        console.log("test");
-    })
+    $(".action").html('<button id="setup" class="btn btn-danger">Continue</button>');
+    //Battle timeline variables
+    timeline = 0;
+    playerQueue = Math.floor(playerPokemon.speed/2);
+    garyQueue = Math.floor(garyPokemon.speed/2);
+
+    //Make health bars
+
+    var playerHealthBar = $("<div>");
+    var playerHealthBarInt = $("<div>");
+    playerHealthBar.addClass("progress");
+    playerHealthBarInt.addClass("progress-bar");
+    playerHealthBarInt.attr("style", "height: 12px;");
+    playerHealthBarInt.attr("style", "width: 100%");
+
+    var garyHealthBar = $("<div>");
+    garyHealthBar.addClass("progress garyHealthBar");
+    garyHealthBar.attr("style", "height: 12px;");
+    playerHealthBar.attr("aria-valuenow", "100");
+
+
+    $("#setup").on("click", function() {
+        $(".playerCard").append(playerHealthBar);
+        $(".progress").html(playerHealthBarInt);
+
+        // '<div class="progress" style="height: 12px;"><div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="25"></div></div>'
+
+        $(".garyCard").append('<div class="progress" style="height: 12px;"><div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="25"></div></div>');
+
+        $(".action").html('<button id="setup2" class="btn btn-danger">Test</button>');
+
+        $("#setup2").on("click", function(){
+            updatedHealthBar();
+            console.log("test");
+            console.log(playerPokemon.health);
+        });
+        
+        var updateHealthBar = function() {
+            playerPokemon.health == playerPokemon.health/2;
+            // $(".playerHealthBarInt").attr("style", "width: " + 100 * bulbasaur.health / playerPokemon.health + "%;");
+            $(".progress-bar").attr("style", "width: " + 100 * bulbasaur.health / playerPokemon.health / 2 + "%");
+        }
+    });
 }
+
+
+
+
+
 
 console.log(bulbasaur);
 console.log(charmander);
